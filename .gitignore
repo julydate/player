@@ -18,3 +18,5 @@ tests/**/coverage/
 
 #Electron-builder output
 /dist_electron
+
+.vercel
