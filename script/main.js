@@ -23,9 +23,9 @@ const App = new Vue({
 
     // leancloud-realtime 添加以下变量，appId、appKey、server这几个值去leancloud控制台>设置>应用凭证里面找
     chatRoom: null,
-    appId: '*******************',
-    appKey: '*******************',
-    server: 'https://*******************.***.com', // REST API 服务器地址
+    appId: '1CWJ6zv0kqlM1yFQOQGX3gWt-gzGzoHsz',
+    appKey: 'CwkkqNvr8GzJse4biJ9lDn3u',
+    server: 'https://1cwj6zv0.lc-cn-n1-shared.com', // REST API 服务器地址
   },
   methods: {
     randomString(length) {
@@ -191,7 +191,7 @@ const App = new Vue({
 
     //换成你自己的一个房间的 conversation id（这是服务器端生成的），第一次执行代码就会生成，在leancloud控制台>即时通讯>对话下面，复制一个过来即可
 
-    var roomId = '***********'
+    var roomId = '620cdefa679fd72ea113fa6e'
 
     // 每个客户端自定义的 id
 
