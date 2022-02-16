@@ -1,5 +1,39 @@
 const { Realtime, TextMessage } = AV
 
+// 获取 url 参数
+function getParam(variable) {
+  var query = window.location.search.substring(1);
+  var vars = query.split("&");
+  for (var i = 0; i < vars.length; i++) {
+    var pair = vars[i].split("=");
+    if (pair[0] == variable) {
+      return pair[1];
+    }
+  }
+  return false;
+}
+// 设置 url 参数
+function setParam(param,val){
+  var stateObject = 0;
+  var title="0"
+  var oUrl = window.location.href.toString();
+  var nUrl = "";
+  var pattern=param+'=([^&]*)';
+  var replaceText=param+'='+val; 
+  if(oUrl.match(pattern)){
+      var tmp='/('+ param+'=)([^&]*)/gi';
+      tmp=oUrl.replace(eval(tmp),replaceText);
+      nUrl = tmp;
+  }else{ 
+      if(oUrl.match('[\?]')){ 
+        nUrl = oUrl+'&'+replaceText; 
+      }else{ 
+        nUrl = oUrl+'?'+replaceText; 
+      } 
+  }
+  history.replaceState(stateObject,title,nUrl);
+}
+
 const App = new Vue({
   el: '#app',
   template: '#template',
@@ -130,6 +164,10 @@ const App = new Vue({
       this.videoSrc = currentPlayVideo
     }
 
+    if(getParam("url")){
+      this.videoSrc = decodeURIComponent(getParam("url"))
+    }
+
     this.userId = this.randomString(10)
 
     this.controlParam.user = this.userId
@@ -191,7 +229,7 @@ const App = new Vue({
 
     //换成你自己的一个房间的 conversation id（这是服务器端生成的），第一次执行代码就会生成，在leancloud控制台>即时通讯>对话下面，复制一个过来即可
 
-    var roomId = '620cdefa679fd72ea113fa6e'
+    var roomId = getParam("id")?getParam("id"):'***********'
 
     // 每个客户端自定义的 id
 
@@ -243,8 +281,9 @@ const App = new Vue({
               transient: true,
             })
             .then(function(conversation) {
-              console.log('创建新 Room 成功，id 是：', roomId)
               roomId = conversation.id
+              console.log('创建新 Room 成功，id 是：', roomId)
+              setParam("id", roomId)
               return conversation
             })
         }
